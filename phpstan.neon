@@ -1,0 +1,16 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+parameters:
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    paths:
+        - src/
+    # Level 9 is the highest level
+    level: 8
+    ignoreErrors:
+        - '#paginate\(\) return type#i'
+    scanFiles:
+    excludePaths:
+        - tests/*/Unit/*
+    checkOctaneCompatibility: true
+    checkModelProperties: true
+    treatPhpDocTypesAsCertain: false
