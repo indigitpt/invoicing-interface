@@ -6,7 +6,7 @@ use Indigit\Invoicing\Enums\DocumentTypeEnum;
 use Indigit\Invoicing\Http\Middleware\Authenticate;
 use Indigit\Invoicing\Invoicing;
 
-Route::middleware(['api', Authenticate::class])
+Route::middleware(Authenticate::class)
     ->prefix('invoicing-interface/api')
     ->group(function () {
         Route::get('{type}', fn (Invoicing $service, DocumentTypeEnum $type) => $service->paginate($type));
