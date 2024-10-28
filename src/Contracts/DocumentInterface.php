@@ -3,6 +3,7 @@
 namespace Indigit\Invoicing\Contracts;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Indigit\Invoicing\Data\UpdateDocumentReferencesData;
 
 interface DocumentInterface
@@ -14,6 +15,8 @@ interface DocumentInterface
 
     /**
      * Registers the external document identifiers and other document metadata
+     *
+     * @param Collection<int, UpdateDocumentReferencesData> $data
      */
-    public function update(UpdateDocumentReferencesData $data): bool;
+    public function update(Collection $data): bool;
 }

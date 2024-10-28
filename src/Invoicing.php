@@ -4,6 +4,7 @@ namespace Indigit\Invoicing;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Indigit\Invoicing\Data\UpdateDocumentReferencesData;
 use Indigit\Invoicing\Enums\DocumentTypeEnum;
 
@@ -29,8 +30,10 @@ final class Invoicing
 
     /**
      * Registers the external document identifier
+     *
+     * @param Collection<int, UpdateDocumentReferencesData> $data
      */
-    public function update(DocumentTypeEnum $type, UpdateDocumentReferencesData $data): JsonResponse
+    public function update(DocumentTypeEnum $type, Collection $data): JsonResponse
     {
         $result = match ($type) {
             DocumentTypeEnum::Payment => $this->payments->update($data),
