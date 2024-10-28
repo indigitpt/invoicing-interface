@@ -2,6 +2,7 @@
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Indigit\Invoicing\Data\UpdateDocumentReferencesData;
 use Indigit\Invoicing\Enums\DocumentTypeEnum;
 use Indigit\Invoicing\Invoicing;
@@ -46,7 +47,7 @@ it('can paginate orders', function () {
 });
 
 it('can update payment identifier', function () {
-    $updateData = new UpdateDocumentReferencesData('payment123', 'external456');
+    $updateData = collect([new UpdateDocumentReferencesData('payment123', 'external456')]);
     $this->paymentDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Payment, $updateData);
@@ -55,7 +56,7 @@ it('can update payment identifier', function () {
 });
 
 it('can update refund identifier', function () {
-    $updateData = new UpdateDocumentReferencesData('refund789', 'external101');
+    $updateData = collect([new UpdateDocumentReferencesData('refund789', 'external101')]);
     $this->refundDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Refund, $updateData);
@@ -64,7 +65,7 @@ it('can update refund identifier', function () {
 });
 
 it('handles failed invoice identifier update', function () {
-    $updateData = new UpdateDocumentReferencesData('invoice555', 'external999');
+    $updateData = collect([new UpdateDocumentReferencesData('invoice555', 'external999')]);
     $this->invoiceDocuments->updateResult = false;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Order, $updateData);

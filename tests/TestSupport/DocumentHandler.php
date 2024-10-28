@@ -3,6 +3,7 @@
 namespace Indigit\Invoicing\Tests\TestSupport;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Indigit\Invoicing\Contracts\DocumentInterface;
 use Indigit\Invoicing\Data\UpdateDocumentReferencesData;
 
@@ -17,7 +18,7 @@ class DocumentHandler implements DocumentInterface
         return $this->data;
     }
 
-    public function update(UpdateDocumentReferencesData $data): bool
+    public function update(Collection $data): bool
     {
         return $this->updateResult;
     }
