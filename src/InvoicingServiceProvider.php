@@ -12,6 +12,6 @@ class InvoicingServiceProvider extends PackageServiceProvider
         $package
             ->name('invoicing')
             ->hasConfigFile()
-            ->hasRoute('../routes/api');
+            ->hasRoute('api');
     }
 }
