@@ -16,7 +16,7 @@ interface DocumentInterface
     /**
      * Registers the external document identifiers and other document metadata
      *
-     * @param Collection<int, UpdateDocumentReferencesData> $data
+     * @param  Collection<int, UpdateDocumentReferencesData>  $data
      */
     public function update(Collection $data): bool;
 }

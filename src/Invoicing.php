@@ -31,7 +31,7 @@ final class Invoicing
     /**
      * Registers the external document identifier
      *
-     * @param Collection<int, UpdateDocumentReferencesData> $data
+     * @param  Collection<int, UpdateDocumentReferencesData>  $data
      */
     public function update(DocumentTypeEnum $type, Collection $data): JsonResponse
     {
