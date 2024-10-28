@@ -2,7 +2,6 @@
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
 use Indigit\Invoicing\Data\UpdateDocumentReferencesData;
 use Indigit\Invoicing\Enums\DocumentTypeEnum;
 use Indigit\Invoicing\Invoicing;
