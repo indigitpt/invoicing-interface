@@ -10,7 +10,8 @@ use Spatie\LaravelData\Data;
 class RefundData extends Data
 {
     public function __construct(
-        public string $id, // this is the payment identifier (uuid)
+        public string $id, // ex: payment.id
+        public string $externalId, // this is the payment identifier (uuid)
         public CustomerData $customer,
         #[WithCast(DateTimeInterfaceCast::class)]
         public Carbon $refunded_at,
