@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 class PaymentData extends Data
 {
     public function __construct(
-        public string $id, // ex: payment.id
+        public string $reference_website, // ex: payment.id
         public CustomerData $customer,
         /** @var Collection<int, PaymentProductData> */
         public Collection $products,

@@ -7,7 +7,7 @@ use Spatie\LaravelData\Data;
 class CustomerData extends Data
 {
     public function __construct(
-        public string $internal_reference, // ex: user.id
+        public string $reference_website, // ex: user.id
         public string $name,
         public string $address,
         public string $city,

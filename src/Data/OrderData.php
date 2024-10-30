@@ -11,11 +11,11 @@ use Spatie\LaravelData\Data;
 class OrderData extends Data
 {
     public function __construct(
-        public string $id, // ex: order.id or payment.id when using single payments
+        public string $reference_website, // ex: order.id or payment.id when using single payments
         /** @var Collection<int, PaymentProductData> */
         public Collection $products,
         /** @var Collection<int, string> */
-        public Collection $payments, // payment identifiers (uuids received)
+        public Collection $payments, // financial document identifiers (uuids received)
         public CustomerData $customer,
         public ?string $gateway = null, // when it's an invoice, Flavorly\Gateways\Enum\PaymentGatewayEnum
         #[WithCast(DateTimeInterfaceCast::class)]
