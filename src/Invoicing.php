@@ -22,6 +22,7 @@ final class Invoicing
     public function paginate(DocumentTypeEnum $type, ?int $perPage = null): Paginator
     {
         $perPage = $perPage ?? 50;
+
         return match ($type) {
             DocumentTypeEnum::Payment => $this->payments->paginate($perPage),
             DocumentTypeEnum::Refund => $this->refunds->paginate($perPage),
