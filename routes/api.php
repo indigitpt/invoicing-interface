@@ -12,7 +12,7 @@ Route::middleware(Authenticate::class)
     ->prefix('invoicing-interface/api')
     ->group(function () {
         // Returns a paginator with the documents
-        Route::get('{type}', fn (Invoicing $service, string $type) => $service->paginate(DocumentTypeEnum::from($type)))
+        Route::get('{type}', fn (Request $request, Invoicing $service, string $type) => $service->paginate(DocumentTypeEnum::from($type), $request->query('perPage')))
             ->whereIn('type', DocumentTypeEnum::toValues());
 
         // Registers the external document identifier

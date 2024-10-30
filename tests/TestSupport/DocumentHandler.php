@@ -12,7 +12,7 @@ class DocumentHandler implements DocumentInterface
 
     public bool $updateResult = false;
 
-    public function paginate(): Paginator
+    public function paginate(int $perPage): Paginator
     {
         return $this->data;
     }

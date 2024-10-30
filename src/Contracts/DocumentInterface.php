@@ -11,7 +11,7 @@ interface DocumentInterface
     /**
      * Paginates documents
      */
-    public function paginate(): Paginator;
+    public function paginate(int $perPage): Paginator;
 
     /**
      * Registers the external document identifiers and other document metadata

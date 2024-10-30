@@ -19,12 +19,13 @@ final class Invoicing
     /**
      * Paginates documents
      */
-    public function paginate(DocumentTypeEnum $type): Paginator
+    public function paginate(DocumentTypeEnum $type, ?int $perPage = null): Paginator
     {
+        $perPage = $perPage ?? 50;
         return match ($type) {
-            DocumentTypeEnum::Payment => $this->payments->paginate(),
-            DocumentTypeEnum::Refund => $this->refunds->paginate(),
-            DocumentTypeEnum::Order => $this->orders->paginate(),
+            DocumentTypeEnum::Payment => $this->payments->paginate($perPage),
+            DocumentTypeEnum::Refund => $this->refunds->paginate($perPage),
+            DocumentTypeEnum::Order => $this->orders->paginate($perPage),
         };
     }
 
