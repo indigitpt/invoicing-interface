@@ -19,6 +19,7 @@ class OrderData extends Data
         public CustomerData $customer,
         public ?string $gateway = null, // when it's an invoice, Flavorly\Gateways\Enum\PaymentGatewayEnum
         #[WithCast(DateTimeInterfaceCast::class)]
-        public ?Carbon $paid_at = null // when it's an invoice, only now we have a paid at date, so we can issue the receipt
+        public ?Carbon $paid_at = null, // when it's an invoice, only now we have a paid at date, so we can issue the receipt
+        public ?string $reference_group = null // financial document group identifier (uuid)
     ) {}
 }
