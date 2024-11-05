@@ -17,7 +17,6 @@ class PaymentData extends Data
         public Collection $products,
         public string $gateway, // Flavorly\Gateways\Enum\PaymentGatewayEnum
         #[WithCast(DateTimeInterfaceCast::class)]
-        public ?Carbon $paid_at = null, // when it's an invoice, we don't have a paid at date yet
-        public ?string $reference_group = null // financial document group identifier (uuid)
+        public ?Carbon $paid_at = null // when it's an invoice, we don't have a paid at date yet
     ) {}
 }

@@ -15,7 +15,6 @@ class RefundData extends Data
         public CustomerData $customer,
         #[WithCast(DateTimeInterfaceCast::class)]
         public Carbon $refunded_at,
-        public ?float $amount = null, // leave empty for full refund
-        public ?string $reference_group = null // financial document group identifier (uuid)
+        public ?float $amount = null // leave empty for full refund
     ) {}
 }
