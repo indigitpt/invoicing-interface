@@ -46,7 +46,7 @@ it('can paginate orders', function () {
 });
 
 it('can update payment identifier', function () {
-    $updateData = collect([new UpdateDocumentReferencesData('payment123', 'external456', 'external456')]);
+    $updateData = collect([new UpdateDocumentReferencesData('payment123', 'external456')]);
     $this->paymentDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Payment, $updateData);
@@ -55,7 +55,7 @@ it('can update payment identifier', function () {
 });
 
 it('can update refund identifier', function () {
-    $updateData = collect([new UpdateDocumentReferencesData('refund789', 'external101', 'external101')]);
+    $updateData = collect([new UpdateDocumentReferencesData('refund789', 'external101')]);
     $this->refundDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Refund, $updateData);
@@ -64,7 +64,7 @@ it('can update refund identifier', function () {
 });
 
 it('handles failed invoice identifier update', function () {
-    $updateData = collect([new UpdateDocumentReferencesData('invoice555', 'external999', 'external999')]);
+    $updateData = collect([new UpdateDocumentReferencesData('invoice555', 'external999')]);
     $this->invoiceDocuments->updateResult = false;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Order, $updateData);
