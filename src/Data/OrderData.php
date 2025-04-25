@@ -14,7 +14,7 @@ class OrderData extends Data
         public string $reference_website, // ex: order.id or payment.id when using single payments
         /** @var Collection<int, PaymentProductData> */
         public Collection $products,
-        /** @var Collection<int, string> */
+        /** @var Collection<int, OrderPaymentData> */
         public Collection $payments, // financial document identifiers (uuids received)
         public CustomerData $customer,
         public ?string $gateway = null, // when it's an invoice, Flavorly\Gateways\Enum\PaymentGatewayEnum
