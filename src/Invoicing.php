@@ -14,6 +14,7 @@ final class Invoicing
         protected Contracts\DocumentInterface $payments,
         protected Contracts\DocumentInterface $refunds,
         protected Contracts\DocumentInterface $orders,
+        protected Contracts\DocumentInterface $withdrawals
     ) {}
 
     /**
@@ -27,6 +28,7 @@ final class Invoicing
             DocumentTypeEnum::Payment => $this->payments->paginate($perPage),
             DocumentTypeEnum::Refund => $this->refunds->paginate($perPage),
             DocumentTypeEnum::Order => $this->orders->paginate($perPage),
+            DocumentTypeEnum::Withdrawal => $this->withdrawals->paginate($perPage),
         };
     }
 
@@ -41,6 +43,7 @@ final class Invoicing
             DocumentTypeEnum::Payment => $this->payments->update($data),
             DocumentTypeEnum::Refund => $this->refunds->update($data),
             DocumentTypeEnum::Order => $this->orders->update($data),
+            DocumentTypeEnum::Withdrawal => $this->withdrawals->update($data),
         };
 
         return response()->json([

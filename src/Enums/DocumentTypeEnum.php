@@ -11,4 +11,5 @@ enum DocumentTypeEnum: string
     case Payment = 'payment';
     case Refund = 'refund';
     case Order = 'order';
+    case Withdrawal = 'withdrawal';
 }
