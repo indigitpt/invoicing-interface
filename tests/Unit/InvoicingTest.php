@@ -7,7 +7,7 @@ use Indigit\Invoicing\Enums\DocumentTypeEnum;
 use Indigit\Invoicing\Invoicing;
 use Indigit\Invoicing\Tests\TestSupport\DocumentHandler;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->paymentDocuments = new DocumentHandler;
     $this->invoiceDocuments = new DocumentHandler;
     $this->refundDocuments = new DocumentHandler;
@@ -21,7 +21,7 @@ beforeEach(function () {
     );
 });
 
-it('can paginate payments', function () {
+it('can paginate payments', function (): void {
     $this->paymentDocuments->data = new Paginator([], 10, 1);
 
     $result = $this->invoicing->paginate(DocumentTypeEnum::Payment);
@@ -29,7 +29,7 @@ it('can paginate payments', function () {
         ->and($result->count())->toBe(0);
 });
 
-it('can paginate refunds', function () {
+it('can paginate refunds', function (): void {
     $this->refundDocuments->data = new Paginator(['refund1', 'refund2'], 10, 1);
 
     $result = $this->invoicing->paginate(DocumentTypeEnum::Refund);
@@ -38,7 +38,7 @@ it('can paginate refunds', function () {
         ->and($result->items())->toBe(['refund1', 'refund2']);
 });
 
-it('can paginate orders', function () {
+it('can paginate orders', function (): void {
     $this->invoiceDocuments->data = new Paginator(['order1', 'order2', 'order3'], 10, 1);
 
     $result = $this->invoicing->paginate(DocumentTypeEnum::Order);
@@ -47,7 +47,7 @@ it('can paginate orders', function () {
         ->and($result->items())->toBe(['order1', 'order2', 'order3']);
 });
 
-it('can paginate withdrawals', function () {
+it('can paginate withdrawals', function (): void {
     $this->withdrawalDocuments->data = new Paginator(['withdrawal1', 'withdrawal2', 'withdrawal3'], 10, 1);
 
     $result = $this->invoicing->paginate(DocumentTypeEnum::Withdrawal);
@@ -56,7 +56,7 @@ it('can paginate withdrawals', function () {
         ->and($result->items())->toBe(['withdrawal1', 'withdrawal2', 'withdrawal3']);
 });
 
-it('can update payment identifier', function () {
+it('can update payment identifier', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('payment123', 'external456')]);
     $this->paymentDocuments->updateResult = true;
 
@@ -65,7 +65,7 @@ it('can update payment identifier', function () {
         ->and($result->getData()->status)->toBe('ok');
 });
 
-it('can update refund identifier', function () {
+it('can update refund identifier', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('refund789', 'external101')]);
     $this->refundDocuments->updateResult = true;
 
@@ -74,7 +74,7 @@ it('can update refund identifier', function () {
         ->and($result->getData()->status)->toBe('ok');
 });
 
-it('handles failed invoice identifier update', function () {
+it('handles failed invoice identifier update', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('invoice555', 'external999')]);
     $this->invoiceDocuments->updateResult = false;
 
@@ -83,7 +83,7 @@ it('handles failed invoice identifier update', function () {
         ->and($result->getData()->status)->toBe('failed');
 });
 
-it('handles failed withdrawal identifier update', function () {
+it('handles failed withdrawal identifier update', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('withdrawal555', 'external999')]);
     $this->invoiceDocuments->updateResult = false;
 
