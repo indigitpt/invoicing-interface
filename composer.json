@@ -1,70 +1,72 @@
 {
-  "name": "indigitpt/invoicing-interface",
-  "description": "Invoicing Interface for the INDIGIT invoicing platform",
-  "keywords": [
-    "flavorly",
-    "laravel",
-    "gateway"
-  ],
-  "homepage": "https://github.com/indigitpt/invoicing-interface",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "indigitpt",
-      "email": "hi@indigit.pt",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "php": "^8.5",
-    "flavorly/laravel-helpers": "*",
-      "spatie/laravel-data": "^4.19",
-      "spatie/laravel-package-tools": "^1.92",
-      "symfony/intl": "^8.0"
-  },
-  "require-dev": {
-    "larastan/larastan": "^3.9",
-    "laravel/pint": "^1.26",
-    "nunomaduro/collision": "^8.8",
-    "orchestra/testbench": "^10.9.0",
-    "pestphp/pest": "^4.1",
-    "pestphp/pest-plugin-arch": "^4.0",
-    "pestphp/pest-plugin-laravel": "^4.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Indigit\\Invoicing\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Indigit\\Invoicing\\Tests\\": "tests/"
-    }
-  },
-  "scripts": {
-    "format": "vendor/bin/pint",
-    "analyse": "vendor/bin/phpstan analyse",
-    "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-    "test": "vendor/bin/pest",
-    "test-coverage": "vendor/bin/pest --coverage"
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true,
-      "phpstan/extension-installer": true
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Indigit\\Invoicing\\InvoicingServiceProvider"
-      ],
-      "aliases": {
-        "Invoicing": "Indigit\\Invoicing\\Facades\\Invoicing"
-      }
-    }
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+    "name": "indigitpt/invoicing-interface",
+    "description": "Invoicing Interface for the INDIGIT invoicing platform",
+    "keywords": [
+        "flavorly",
+        "laravel",
+        "gateway"
+    ],
+    "homepage": "https://github.com/indigitpt/invoicing-interface",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "indigitpt",
+            "email": "hi@indigit.pt",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "flavorly/laravel-helpers": "*",
+        "illuminate/contracts": "^11.0||^12.0||^13.0",
+        "spatie/laravel-data": "^4.20",
+        "spatie/laravel-package-tools": "^1.93",
+        "symfony/intl": "^8.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.9",
+        "laravel/pint": "^1.29",
+        "nunomaduro/collision": "^8.9",
+        "orchestra/testbench": "^10.10",
+        "pestphp/pest": "^4.4",
+        "pestphp/pest-plugin-arch": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Indigit\\Invoicing\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Indigit\\Invoicing\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Indigit\\Invoicing\\InvoicingServiceProvider"
+            ],
+            "aliases": {
+                "Invoicing": "Indigit\\Invoicing\\Facades\\Invoicing"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
