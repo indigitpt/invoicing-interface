@@ -9,14 +9,14 @@ use Indigit\Invoicing\Tests\TestSupport\DocumentHandler;
 
 beforeEach(function (): void {
     $this->paymentDocuments = new DocumentHandler;
-    $this->invoiceDocuments = new DocumentHandler;
     $this->refundDocuments = new DocumentHandler;
+    $this->orderDocuments = new DocumentHandler;
     $this->withdrawalDocuments = new DocumentHandler;
 
     $this->invoicing = new Invoicing(
         $this->paymentDocuments,
         $this->refundDocuments,
-        $this->invoiceDocuments,
+        $this->orderDocuments,
         $this->withdrawalDocuments
     );
 });
@@ -39,7 +39,7 @@ it('can paginate refunds', function (): void {
 });
 
 it('can paginate orders', function (): void {
-    $this->invoiceDocuments->data = new Paginator(['order1', 'order2', 'order3'], 10, 1);
+    $this->orderDocuments->data = new Paginator(['order1', 'order2', 'order3'], 10, 1);
 
     $result = $this->invoicing->paginate(DocumentTypeEnum::Order);
     expect($result)->toBeInstanceOf(Paginator::class)
@@ -56,13 +56,31 @@ it('can paginate withdrawals', function (): void {
         ->and($result->items())->toBe(['withdrawal1', 'withdrawal2', 'withdrawal3']);
 });
 
+it('uses default perPage of 50', function (): void {
+    $this->paymentDocuments->data = new Paginator([], 50, 1);
+
+    $result = $this->invoicing->paginate(DocumentTypeEnum::Payment);
+    expect($result)->toBeInstanceOf(Paginator::class)
+        ->and($this->paymentDocuments->lastPerPage)->toBe(50);
+});
+
+it('uses custom perPage when provided', function (): void {
+    $this->paymentDocuments->data = new Paginator([], 25, 1);
+
+    $result = $this->invoicing->paginate(DocumentTypeEnum::Payment, 25);
+    expect($result)->toBeInstanceOf(Paginator::class)
+        ->and($this->paymentDocuments->lastPerPage)->toBe(25);
+});
+
 it('can update payment identifier', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('payment123', 'external456')]);
     $this->paymentDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Payment, $updateData);
     expect($result)->toBeInstanceOf(JsonResponse::class)
-        ->and($result->getData()->status)->toBe('ok');
+        ->and($result->getData()->status)->toBe('ok')
+        ->and($result->getStatusCode())->toBe(200)
+        ->and($this->paymentDocuments->lastUpdateData)->toBe($updateData);
 });
 
 it('can update refund identifier', function (): void {
@@ -71,23 +89,69 @@ it('can update refund identifier', function (): void {
 
     $result = $this->invoicing->update(DocumentTypeEnum::Refund, $updateData);
     expect($result)->toBeInstanceOf(JsonResponse::class)
-        ->and($result->getData()->status)->toBe('ok');
+        ->and($result->getData()->status)->toBe('ok')
+        ->and($result->getStatusCode())->toBe(200)
+        ->and($this->refundDocuments->lastUpdateData)->toBe($updateData);
 });
 
-it('handles failed invoice identifier update', function (): void {
-    $updateData = collect([new UpdateDocumentReferencesData('invoice555', 'external999')]);
-    $this->invoiceDocuments->updateResult = false;
+it('can update order identifier', function (): void {
+    $updateData = collect([new UpdateDocumentReferencesData('order123', 'external789')]);
+    $this->orderDocuments->updateResult = true;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Order, $updateData);
     expect($result)->toBeInstanceOf(JsonResponse::class)
-        ->and($result->getData()->status)->toBe('failed');
+        ->and($result->getData()->status)->toBe('ok')
+        ->and($result->getStatusCode())->toBe(200)
+        ->and($this->orderDocuments->lastUpdateData)->toBe($updateData);
+});
+
+it('can update withdrawal identifier', function (): void {
+    $updateData = collect([new UpdateDocumentReferencesData('withdrawal123', 'external789')]);
+    $this->withdrawalDocuments->updateResult = true;
+
+    $result = $this->invoicing->update(DocumentTypeEnum::Withdrawal, $updateData);
+    expect($result)->toBeInstanceOf(JsonResponse::class)
+        ->and($result->getData()->status)->toBe('ok')
+        ->and($result->getStatusCode())->toBe(200)
+        ->and($this->withdrawalDocuments->lastUpdateData)->toBe($updateData);
+});
+
+it('handles failed payment identifier update', function (): void {
+    $updateData = collect([new UpdateDocumentReferencesData('payment555', 'external999')]);
+    $this->paymentDocuments->updateResult = false;
+
+    $result = $this->invoicing->update(DocumentTypeEnum::Payment, $updateData);
+    expect($result)->toBeInstanceOf(JsonResponse::class)
+        ->and($result->getData()->status)->toBe('failed')
+        ->and($result->getStatusCode())->toBe(404);
+});
+
+it('handles failed refund identifier update', function (): void {
+    $updateData = collect([new UpdateDocumentReferencesData('refund555', 'external999')]);
+    $this->refundDocuments->updateResult = false;
+
+    $result = $this->invoicing->update(DocumentTypeEnum::Refund, $updateData);
+    expect($result)->toBeInstanceOf(JsonResponse::class)
+        ->and($result->getData()->status)->toBe('failed')
+        ->and($result->getStatusCode())->toBe(404);
+});
+
+it('handles failed order identifier update', function (): void {
+    $updateData = collect([new UpdateDocumentReferencesData('order555', 'external999')]);
+    $this->orderDocuments->updateResult = false;
+
+    $result = $this->invoicing->update(DocumentTypeEnum::Order, $updateData);
+    expect($result)->toBeInstanceOf(JsonResponse::class)
+        ->and($result->getData()->status)->toBe('failed')
+        ->and($result->getStatusCode())->toBe(404);
 });
 
 it('handles failed withdrawal identifier update', function (): void {
     $updateData = collect([new UpdateDocumentReferencesData('withdrawal555', 'external999')]);
-    $this->invoiceDocuments->updateResult = false;
+    $this->withdrawalDocuments->updateResult = false;
 
     $result = $this->invoicing->update(DocumentTypeEnum::Withdrawal, $updateData);
     expect($result)->toBeInstanceOf(JsonResponse::class)
-        ->and($result->getData()->status)->toBe('failed');
+        ->and($result->getData()->status)->toBe('failed')
+        ->and($result->getStatusCode())->toBe(404);
 });
