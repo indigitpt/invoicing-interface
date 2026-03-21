@@ -11,6 +11,7 @@ interface DocumentInterface
     /**
      * Paginates documents
      */
+    #[\NoDiscard('Paginator result must be returned to the client')]
     public function paginate(int $perPage): Paginator;
 
     /**
@@ -18,5 +19,6 @@ interface DocumentInterface
      *
      * @param  Collection<int, UpdateDocumentReferencesData>  $data
      */
+    #[\NoDiscard('Update result must be checked for success/failure')]
     public function update(Collection $data): bool;
 }

@@ -20,6 +20,7 @@ final class Invoicing
     /**
      * Paginates documents
      */
+    #[\NoDiscard('Paginator result must be returned to the client')]
     public function paginate(DocumentTypeEnum $type, ?int $perPage = null): Paginator
     {
         $perPage ??= 50;
@@ -37,6 +38,7 @@ final class Invoicing
      *
      * @param  Collection<int, UpdateDocumentReferencesData>  $data
      */
+    #[\NoDiscard('Response must be returned to the client')]
     public function update(DocumentTypeEnum $type, Collection $data): JsonResponse
     {
         $result = match ($type) {
