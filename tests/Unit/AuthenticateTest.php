@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Pagination\Paginator;
+use Indigit\Invoicing\Contracts\DocumentInterface;
+use Indigit\Invoicing\Invoicing;
 use Indigit\Invoicing\Tests\TestSupport\DocumentHandler;
 
 beforeEach(function (): void {
@@ -8,8 +10,8 @@ beforeEach(function (): void {
     $handler->data = new Paginator([], 50, 1);
     $handler->updateResult = true;
 
-    $this->app->when(\Indigit\Invoicing\Invoicing::class)
-        ->needs(\Indigit\Invoicing\Contracts\DocumentInterface::class)
+    $this->app->when(Invoicing::class)
+        ->needs(DocumentInterface::class)
         ->give(fn () => $handler);
 });
 
